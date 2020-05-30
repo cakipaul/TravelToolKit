@@ -1,5 +1,5 @@
 Vue.use(vant.Lazyload);
-
+window.$v = vant;
 new Vue({
     el: '#app',
     methods: {
@@ -59,6 +59,9 @@ new Vue({
                 } break;
             }
             $v.Toast("type:" + typeName + "\n尚未完工~");
+        },
+        addNewItem(){
+            $v.Toast("新增页面尚未完工~");
         }
     },
     data() {

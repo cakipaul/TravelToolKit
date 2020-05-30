@@ -6,7 +6,6 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover" />
     <!-- 引入样式文件 -->
-    <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@2.8/lib/index.css" />
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- 引入 Vue 和 Vant 的 JS 文件 -->
@@ -22,11 +21,37 @@
 
 <body>
     <div id="main"></div>
-    <!-- 开启 safe-area-inset-bottom 属性 -->
     <script>
+        /**
+         * 判断是否是移动设备
+         */
+        function isMobile() {
+            let user_agent = navigator.userAgent;
+            let mobile_browser = Array(
+                "mqqbrowser", //手机QQ浏览器 
+                "opera mobi", //手机opera 
+                "juc", "iuc", //uc浏览器 
+                "fennec", "ios", "applewebKit/420", "applewebkit/525", "applewebkit/532",
+                "ipad", "iphone", "ipaq", "ipod", "iemobile", "windows ce", //windows phone 
+                "240x320", "480x640", "acer", "android", "anywhereyougo.com", "asus", "audio", "blackberry", "blazer", "coolpad", "dopod", "etouch", "hitachi", "htc", "huawei", "jbrowser", "lenovo", "lg", "lg-", "lge-", "lge", "mobi", "moto", "nokia", "phone", "samsung", "sony", "symbian", "tablet", "tianyu", "wap", "xda", "xde", "zte");
+            let is_mobile = false;
+            for (device of mobile_browser) {
+                if (user_agent && user_agent.toLocaleLowerCase().indexOf(device)!=-1) {
+                    is_mobile = true;
+                    break;
+                }
+            }
+            return is_mobile;
+        }
         $(function () {
-            window.$v = vant;
-            $('#main').load('html/main.html');
+            if (isMobile()) {
+                console.log("load mobile web page")
+                $('#main').load('html/main-mobile.html');
+            } else {
+                console.log("load PC web page，暂时仍使用移动端页面")
+                // $('#main').load('html/main-pc.html');
+                $('#main').load('html/main-mobile.html');
+            }
         })
     </script>
 </body>

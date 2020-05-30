@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="css/main-pc.css" />
+
 <div id="app">
     <van-nav-bar v-if="nav.showNav" :title="nav.title" :left-text="nav.leftText" :right-text="nav.rightText"
         :left-arrow="nav.leftArrow" :placeholder="true" :fixed="nav.fixed" @click-left="onClickLeft"
@@ -54,14 +56,13 @@
         </template>
     </van-pull-refresh>
     <transition name="van-slide-up">
-        <div class="float-button" v-if="content.showFloatButton">
+        <div class="float-button" @click="addNewItem" v-if="content.showFloatButton">
             <div style="margin-top:0.5rem">
                 <van-icon name="plus" color="white" size="2rem"></van-icon>
             </div>
         </div>
     </transition>
+    <!-- 开启 safe-area-inset-bottom 属性 -->
+    <van-number-keyboard safe-area-inset-bottom />
 </div>
-
-<script type="text/javascript" src="js/main.js"></script>
-
-<van-number-keyboard safe-area-inset-bottom />
+<script type="text/javascript" src="js/main-pc.js"></script>
