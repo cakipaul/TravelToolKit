@@ -1,0 +1,67 @@
+<div id="app">
+    <van-nav-bar v-if="nav.showNav" :title="nav.title" :left-text="nav.leftText" :right-text="nav.rightText"
+        :left-arrow="nav.leftArrow" :placeholder="true" :fixed="nav.fixed" @click-left="onClickLeft"
+        @click-right="onClickRight">
+        <template #left>
+            <van-icon v-if="nav.leftIcon" :name="nav.leftIcon" size="18" />
+        </template>
+        <template #right>
+            <van-icon v-if="nav.rightIcon" :name="nav.rightIcon" size="18" />
+        </template>
+    </van-nav-bar>
+    <van-search v-if="nav.showSearch" v-model="nav.searchVal" show-action placeholder="请输入搜索关键词" @search="onSearch"
+        @cancel="onSearchCancel"></van-search>
+    <van-pull-refresh v-model="content.loading" success-text="刷新成功" @refresh="onRefresh">
+        <template v-for="item in content.data">
+            <div class="content-card">
+                <van-skeleton title avatar :row="3" :loading="item.loading">
+                    <van-row align="top" gutter="20">
+                        <van-col span="20">
+                            <div class="van-ellipsis">
+                                <van-icon :color="content.iconColor" :name="item.icon"></van-icon>
+                                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><b>{{item.title}}</b>
+                            </div>
+                        </van-col>
+                        <van-col @click="popContentDetial(item)" span="4">
+                            <van-icon color="#1989fa" name="weapp-nav"></van-icon>
+                        </van-col>
+                    </van-row>
+                    <template v-for="content in item.content">
+                        <van-row align="center" gutter="20">
+                            <van-col span="10">
+                                <div class="van-ellipsis">
+                                    <i>{{content.key}}</i>
+                                    <template v-for="tag in content.tags">
+                                        <span>&nbsp;</span>
+                                        <van-tag :type="tag.type">{{tag.tag}}</van-tag>
+                                    </template>
+                                </div>
+                            </van-col>
+                            <van-col span="14">
+                                <!-- <div class="van-multi-ellipsis--l2">{{content.val}}</div> -->
+                                <div class="van-ellipsis">{{content.val}}</div>
+                            </van-col>
+                        </van-row>
+                    </template>
+                    <van-row align="center" gutter="20">
+                        <van-col span="10"><i>时间</i>
+                        </van-col>
+                        <van-col span="14">{{item.datetime}}
+                        </van-col>
+                    </van-row>
+                </van-skeleton>
+            </div>
+        </template>
+    </van-pull-refresh>
+    <transition name="van-slide-up">
+        <div class="float-button" v-if="content.showFloatButton">
+            <div style="margin-top:0.5rem">
+                <van-icon name="plus" color="white" size="2rem"></van-icon>
+            </div>
+        </div>
+    </transition>
+</div>
+
+<script type="text/javascript" src="js/main.js"></script>
+
+<van-number-keyboard safe-area-inset-bottom />
